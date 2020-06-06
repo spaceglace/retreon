@@ -43,7 +43,20 @@ func getGameInformation(w http.ResponseWriter, r *http.Request) {
 }
 
 func setGameOrder(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	l := logger.Named("api")
+	body := struct {
+		Game  string   `json:"game"`
+		Order []string `json:"order"`
+	}{}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		l.Error("Error decoding payload",
+			zap.String("function", "setGameOrder"),
+			zap.Error(err),
+		)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	config.SetGameOrder(body.Game, body.Order)
 }
 
 func getMetadata(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +107,18 @@ func setRefresh(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	config.SetRefresh(body.Refresh)
+	err := config.SetRefresh(body.Refresh)
+	if err != nil {
+		l.Error("Error setting refresh rate",
+			zap.Int("refresh", body.Refresh),
+			zap.Error(err),
+		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	l.Info("Successfully set refresh rate",
+		zap.Int("refresh", body.Refresh),
+	)
 }
 
 func getLayoutList(w http.ResponseWriter, r *http.Request) {

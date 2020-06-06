@@ -6,7 +6,7 @@
       outlined
       type="error"
     >No profile set, cannot query API</v-alert>
-    <v-row justify="space-between">
+    <v-row justify="space-between" class="mt-6">
       <v-col cols="auto">
         Last refresh was {{ updateDuration }} ago
       </v-col>
@@ -34,6 +34,7 @@
           ticks="always"
           tick-size="4"
           v-model="refreshRate"
+          @change="test"
         ></v-slider>
       </v-col>
     </v-row>
@@ -68,9 +69,7 @@ export default {
       get() {
         return this.refresh;
       },
-      set(val) {
-        this.setRefresh(val);
-      },
+      set(val) {},
     },
   },
 
@@ -94,6 +93,11 @@ export default {
       this.loading = false;
       this.resetTimer();
     },
+    test(val) {
+      // have this as a separate event instead of a computed setter
+      // so that it doesn't proc on the initial value being set
+      this.setRefresh(val);
+    }
   },
 
   mounted() {

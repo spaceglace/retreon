@@ -27,3 +27,8 @@ func SetRefresh(refresh int) error {
 	settings.Refresh = refresh
 	return save()
 }
+
+func SetGameOrder(game string, order []string) error {
+	settings.Orders[game] = order
+	return save()
+}

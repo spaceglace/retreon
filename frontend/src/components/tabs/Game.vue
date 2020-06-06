@@ -128,6 +128,8 @@ export default {
       // remove the entry and reinsert it correctly
       this.game.order.splice(this.game.order.indexOf(data.moved.element), 1);
       this.game.order.splice(goalIndex, 0, data.moved.element);
+
+      this.setGameOrder({ game: this.game.id, order: this.game.order });
     },
   },
 };
