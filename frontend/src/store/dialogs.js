@@ -13,7 +13,6 @@ export default {
 
   actions: {
     async openDialog({ commit }, { name }) {
-      console.log(name);
       commit('SET_DIALOG', name);
     },
     async closeDialog({ commit }) {

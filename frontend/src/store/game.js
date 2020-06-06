@@ -82,7 +82,7 @@ export default {
             order,
           }),
         });
-        console.log('Successfuly set game order:', request.statusText);
+        console.log('setGameOrder:', request.statusText);
       } catch (e) {
         console.error('Failed to set game order:', e);
       }
@@ -96,7 +96,7 @@ export default {
             mode,
           }),
         });
-        console.log('Successfully set game mode:', request.statusText);
+        console.log('setGameMode:', request.statusText);
       } catch (e) {
         console.error('Failed to set game mode:', e);
       }
@@ -110,7 +110,7 @@ export default {
             refresh,
           }),
         });
-        console.log('Status of setRefresh request:', request.statusText);
+        console.log('setRefresh:', request.statusText);
       } catch (e) {
         console.error('Failed to set refresh:', e);
       }
@@ -121,7 +121,7 @@ export default {
         const result = await request.json();
         commit('SET_MODE', result.mode);
         commit('SET_REFRESH', result.refresh);
-        console.log('Status of getMetadata:', request.statusText);
+        console.log('getMetadata:', request.statusText);
       } catch (e) {
         console.error('Failed to get metadata:', e);
       }

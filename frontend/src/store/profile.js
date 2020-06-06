@@ -29,7 +29,7 @@ export default {
         const request = await fetch(getURL('/api/profile/list'));
         const profiles = await request.json();
         commit('SET_PROFILES', profiles.profiles);
-        console.log('Successfully got profiles:', request.statusText);
+        console.log('getProfiles:', request.statusText);
       } catch (e) {
         console.error('Failed to fetch profiles:', e);
       }
@@ -49,7 +49,7 @@ export default {
             key,
           }),
         });
-        console.log('Successfully added profile:', result.statusText);
+        console.log('addProfile:', result.statusText);
       } catch (e) {
         console.error('Failed to add profile:', e);
       }
@@ -63,7 +63,7 @@ export default {
             name,
           }),
         });
-        console.log('Successfully removed profile:', result.statusText);
+        console.log('removeProfile:', result.statusText);
       } catch (e) {
         console.error('Failed to remove profile:', e);
       }
@@ -81,7 +81,7 @@ export default {
       try {
         const result = await fetch(getURL('/api/profile/active'))
         const profile = await result.json();
-        console.log('got active profile:', profile.profile);
+        console.log('getActiveProfile:', profile.profile);
         commit('SET_ACTIVE_PROFILE', profile.profile);
       } catch (e) {
         console.error('Failed to get active profile:', e);
@@ -97,7 +97,7 @@ export default {
             name,
           }),
         });
-        console.log('Successfully set active profile:', result.statusText);
+        console.log('setActiveProfile:', result.statusText);
       } catch (e) {
         console.error('Failed to set active profile:', e);
       }

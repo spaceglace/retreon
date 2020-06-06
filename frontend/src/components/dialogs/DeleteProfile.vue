@@ -48,8 +48,6 @@ export default {
     ...mapActions('profile', ['removeProfile']),
 
     async confirm() {
-      console.log('removing', this.profile);
-
       this.loading = true;
       await this.removeProfile({ name: this.profile });
       this.loading = false;

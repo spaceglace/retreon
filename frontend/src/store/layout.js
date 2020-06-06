@@ -56,7 +56,7 @@ export default {
         const request = await fetch(getURL('/api/layout/list'));
         const layouts = await request.json();
         commit('SET_LAYOUTS', layouts.layouts);
-        console.log('Successfully got layouts:', request.statusText);
+        console.log('getLayouts:', request.statusText);
       } catch (e) {
         console.error('Failed to get layouts:', e);
       }
@@ -79,7 +79,7 @@ export default {
             layout: payload,
           }),
         });
-        console.log('Successfully added layout:', request.statusText);
+        console.log('addLayout:', request.statusText);
       } catch (e) {
         console.error('Failed to add layout:', e);
       }
@@ -93,7 +93,7 @@ export default {
             name,
           }),
         });
-        console.log('Successfully removed layout:', request.statusText);
+        console.log('removeLayout:', request.statusText);
       } catch (e) {
         console.error('Failed to remove layout:', e);
       }
@@ -109,7 +109,7 @@ export default {
           }),
         });
         commit('SAVED_LAYOUT', state.layout.name);
-        console.log('Successfully saved layout:', request.statusText);
+        console.log('saveLayout:', request.statusText);
       } catch (e) {
         console.error('Failed to save layout:', e);
       }
@@ -118,7 +118,7 @@ export default {
       try {
         const request = await fetch(getURL('/api/layout/active'));
         const layout = await request.json();
-        console.log('got active layout:', layout.layout);
+        console.log('getActiveLayout:', layout.layout);
         commit('SET_ACTIVE_LAYOUT', layout.layout);
         commit('SAVED_LAYOUT', layout.layout);
       } catch (e) {
@@ -137,7 +137,7 @@ export default {
             name,
           }),
         });
-        console.log('Successfully set active layout:', request.statusText);
+        console.log('setActiveLayout:', request.statusText);
       } catch (e) {
         console.error('Failed to save active layout:', e);
       }
