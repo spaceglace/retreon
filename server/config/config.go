@@ -35,8 +35,6 @@ func getConfigFilename() (string, error) {
 }
 
 func Initialize(l *zap.Logger) error {
-	logger := l.Named("config")
-
 	name, err := getConfigFilename()
 	if err != nil {
 		return err
@@ -44,7 +42,7 @@ func Initialize(l *zap.Logger) error {
 	// check for existance of config file
 	_, err = os.Stat(name)
 	if os.IsNotExist(err) {
-		logger.Warn("No config file found, using defaults")
+		l.Warn("No config file found, using defaults")
 		settings = Settings{
 			Profile:  "",
 			Profiles: map[string]Profile{},
@@ -57,7 +55,7 @@ func Initialize(l *zap.Logger) error {
 	// if we got past the existance, assume we can read it
 	contents, err := ioutil.ReadFile(name)
 	if err != nil {
-		logger.Error("Error opening config file",
+		l.Error("Error opening config file",
 			zap.Error(err),
 		)
 		return err

@@ -10,22 +10,21 @@ import (
 )
 
 func getGameInformation(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 		Key  string `json:"key"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "getGameInformation"),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	game, err := retroachievements.GetGameInformation(l, body.Name, body.Key)
+	game, err := retroachievements.GetGameInformation(logger, body.Name, body.Key)
 	if err != nil {
-		l.Error("Error getting game information",
+		logger.Error("Error getting game information",
 			zap.String("Username", body.Name),
 			zap.Error(err),
 		)
@@ -33,7 +32,7 @@ func getGameInformation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := json.NewEncoder(w).Encode(game); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getGameInformation"),
 			zap.Error(err),
 		)
@@ -43,13 +42,12 @@ func getGameInformation(w http.ResponseWriter, r *http.Request) {
 }
 
 func setGameOrder(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Game  string   `json:"game"`
 		Order []string `json:"order"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "setGameOrder"),
 			zap.Error(err),
 		)
@@ -60,7 +58,6 @@ func setGameOrder(w http.ResponseWriter, r *http.Request) {
 }
 
 func getMetadata(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	payload := struct {
 		Mode    string `json:"mode"`
 		Refresh int    `json"refresh"`
@@ -69,7 +66,7 @@ func getMetadata(w http.ResponseWriter, r *http.Request) {
 		Refresh: config.GetRefresh(),
 	}
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getMetadata"),
 			zap.Error(err),
 		)
@@ -79,12 +76,11 @@ func getMetadata(w http.ResponseWriter, r *http.Request) {
 }
 
 func setGameMode(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Mode string `json:"mode"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "setGameMode"),
 			zap.Error(err),
 		)
@@ -95,12 +91,11 @@ func setGameMode(w http.ResponseWriter, r *http.Request) {
 }
 
 func setRefresh(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Refresh int `json:"refresh"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "setRefresh"),
 			zap.Error(err),
 		)
@@ -109,27 +104,26 @@ func setRefresh(w http.ResponseWriter, r *http.Request) {
 	}
 	err := config.SetRefresh(body.Refresh)
 	if err != nil {
-		l.Error("Error setting refresh rate",
+		logger.Error("Error setting refresh rate",
 			zap.Int("refresh", body.Refresh),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully set refresh rate",
+	logger.Info("Successfully set refresh rate",
 		zap.Int("refresh", body.Refresh),
 	)
 }
 
 func getLayoutList(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	payload := struct {
-		Layouts map[string]string `json:"layouts"`
+		Loggerayouts map[string]string `json:"layouts"`
 	}{
-		Layouts: config.GetLayouts(),
+		Loggerayouts: config.GetLayouts(),
 	}
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getLayoutList"),
 			zap.Error(err),
 		)
@@ -139,13 +133,12 @@ func getLayoutList(w http.ResponseWriter, r *http.Request) {
 }
 
 func addLayout(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name   string `json:"name"`
 		Layout string `json:"layout"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "addLayout"),
 			zap.Error(err),
 		)
@@ -153,25 +146,24 @@ func addLayout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.AddLayout(body.Name, body.Layout); err != nil {
-		l.Error("Error adding layout",
+		logger.Error("Error adding layout",
 			zap.String("layout", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully added layout",
+	logger.Info("Successfully added layout",
 		zap.String("layout", body.Name),
 	)
 }
 
 func removeLayout(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "removeLayout"),
 			zap.Error(err),
 		)
@@ -179,26 +171,25 @@ func removeLayout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.RemoveLayout(body.Name); err != nil {
-		l.Error("Error removing layout",
+		logger.Error("Error removing layout",
 			zap.String("layout", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully removed layout",
+	logger.Info("Successfully removed layout",
 		zap.String("layout", body.Name),
 	)
 }
 
 func updateLayout(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name   string `json:"name"`
 		Layout string `json:"layout"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "updateLayout"),
 			zap.Error(err),
 		)
@@ -206,7 +197,7 @@ func updateLayout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.UpdateLayout(body.Name, body.Layout); err != nil {
-		l.Error("Error updating layout",
+		logger.Error("Error updating layout",
 			zap.String("layout", body.Name),
 			zap.Error(err),
 		)
@@ -217,14 +208,13 @@ func updateLayout(w http.ResponseWriter, r *http.Request) {
 }
 
 func getActiveLayout(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	payload := struct {
 		Active string `json:"layout"`
 	}{
 		Active: config.GetActiveLayout(),
 	}
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getActiveLayout"),
 			zap.Error(err),
 		)
@@ -234,12 +224,11 @@ func getActiveLayout(w http.ResponseWriter, r *http.Request) {
 }
 
 func setActiveLayout(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "setActiveLayout"),
 			zap.Error(err),
 		)
@@ -247,27 +236,26 @@ func setActiveLayout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.SetActiveLayout(body.Name); err != nil {
-		l.Error("Error setting active layout",
+		logger.Error("Error setting active layout",
 			zap.String("layout", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully set active layout",
+	logger.Info("Successfully set active layout",
 		zap.String("layout", body.Name),
 	)
 }
 
 func getProfiles(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	payload := struct {
 		Profiles map[string]config.Profile `json:"profiles"`
 	}{
 		Profiles: config.GetProfiles(),
 	}
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getProfiles"),
 			zap.Error(err),
 		)
@@ -277,13 +265,12 @@ func getProfiles(w http.ResponseWriter, r *http.Request) {
 }
 
 func addProfile(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 		Key  string `json:"key"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "addProfile"),
 			zap.Error(err),
 		)
@@ -291,25 +278,24 @@ func addProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.AddProfile(body.Name, body.Key); err != nil {
-		l.Error("Error adding profile",
+		logger.Error("Error adding profile",
 			zap.String("profile", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully added profile",
+	logger.Info("Successfully added profile",
 		zap.String("profile", body.Name),
 	)
 }
 
 func removeProfile(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "removeProfile"),
 			zap.Error(err),
 		)
@@ -317,27 +303,26 @@ func removeProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.RemoveProfile(body.Name); err != nil {
-		l.Error("Error removing profile",
+		logger.Error("Error removing profile",
 			zap.String("profile", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully removed profile",
+	logger.Info("Successfully removed profile",
 		zap.String("profile", body.Name),
 	)
 }
 
 func getActiveProfile(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	payload := struct {
 		Active string `json:"profile"`
 	}{
 		Active: config.GetActiveProfile(),
 	}
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		l.Error("Error writing payload",
+		logger.Error("Error writing payload",
 			zap.String("function", "getActiveProfile"),
 			zap.Error(err),
 		)
@@ -347,12 +332,11 @@ func getActiveProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func setActiveProfile(w http.ResponseWriter, r *http.Request) {
-	l := logger.Named("api")
 	body := struct {
 		Name string `json:"name"`
 	}{}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		l.Error("Error decoding payload",
+		logger.Error("Error decoding payload",
 			zap.String("function", "setActiveProfile"),
 			zap.Error(err),
 		)
@@ -360,14 +344,14 @@ func setActiveProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := config.SetActiveProfile(body.Name); err != nil {
-		l.Error("Error setting active profile",
+		logger.Error("Error setting active profile",
 			zap.String("profile", body.Name),
 			zap.Error(err),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	l.Info("Successfully set active profile",
+	logger.Info("Successfully set active profile",
 		zap.String("profile", body.Name),
 	)
 }

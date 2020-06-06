@@ -42,8 +42,6 @@ type Achievement struct {
 }
 
 func GetLastGame(l *zap.Logger, username, apikey string) (string, error) {
-	logger := l.Named("api")
-
 	url := fmt.Sprintf(
 		"%s/API_GetUserRecentlyPlayedGames.php?z=%s&y=%s&u=%s&c=1",
 		baseURL,
@@ -53,7 +51,7 @@ func GetLastGame(l *zap.Logger, username, apikey string) (string, error) {
 	)
 	response, err := http.Get(url)
 	if code := response.StatusCode; err != nil || code < 200 || code >= 300 {
-		logger.Error("Error getting recently played games",
+		l.Error("Error getting recently played games",
 			zap.String("username", username),
 			zap.Int("code", code),
 			zap.Error(err),
@@ -63,7 +61,7 @@ func GetLastGame(l *zap.Logger, username, apikey string) (string, error) {
 
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		logger.Error("Error reading response of recently played games",
+		l.Error("Error reading response of recently played games",
 			zap.String("username", username),
 			zap.Error(err),
 		)
@@ -74,7 +72,7 @@ func GetLastGame(l *zap.Logger, username, apikey string) (string, error) {
 		GameID string `json:"GameID"`
 	}
 	if err := json.Unmarshal(responseBody, &container); err != nil {
-		logger.Error("Error parsing payload of recently played games",
+		l.Error("Error parsing payload of recently played games",
 			zap.String("username", username),
 			zap.Error(err),
 		)
@@ -85,11 +83,9 @@ func GetLastGame(l *zap.Logger, username, apikey string) (string, error) {
 }
 
 func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
-	logger := l.Named("api")
-
 	gameid, err := GetLastGame(l, username, apikey)
 	if err != nil {
-		logger.Error("Error getting last game for user",
+		l.Error("Error getting last game for user",
 			zap.String("username", username),
 			zap.Error(err),
 		)
@@ -106,7 +102,7 @@ func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
 	)
 	response, err := http.Get(url)
 	if code := response.StatusCode; err != nil || code < 200 || code >= 300 {
-		logger.Error("Error getting game information for user",
+		l.Error("Error getting game information for user",
 			zap.String("username", username),
 			zap.Int("code", code),
 			zap.Error(err),
@@ -116,7 +112,7 @@ func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
 
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		logger.Error("Error reading game information for user",
+		l.Error("Error reading game information for user",
 			zap.String("username", username),
 			zap.Error(err),
 		)
@@ -133,7 +129,7 @@ func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
 		Achievements map[string]Achievement `json:"Achievements,omitempty"`
 	}
 	if err := json.Unmarshal(responseBody, &container); err != nil {
-		logger.Error("Error parsing game information for user",
+		l.Error("Error parsing game information for user",
 			zap.String("username", username),
 			zap.Error(err),
 		)
