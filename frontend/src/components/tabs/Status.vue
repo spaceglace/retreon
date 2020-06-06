@@ -47,6 +47,7 @@ import { mapState, mapActions } from 'vuex';
 export default {
   data: () => ({
     loading: false,
+    everUpdated: false,
   }),
 
   computed: {
@@ -83,7 +84,8 @@ export default {
     tick() {
       this.incrementTimer();
       if (this.refresh === 0) return;
-      if (this.timer >= this.refresh * 5) {
+      if (!this.everUpdated || this.timer >= this.refresh * 5) {
+        this.everUpdated = true;
         this.update();
       }
     },

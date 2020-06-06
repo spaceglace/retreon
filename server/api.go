@@ -60,7 +60,7 @@ func setGameOrder(w http.ResponseWriter, r *http.Request) {
 func getMetadata(w http.ResponseWriter, r *http.Request) {
 	payload := struct {
 		Mode    string `json:"mode"`
-		Refresh int    `json"refresh"`
+		Refresh int    `json:"refresh"`
 	}{
 		Mode:    config.GetGameMode(),
 		Refresh: config.GetRefresh(),
