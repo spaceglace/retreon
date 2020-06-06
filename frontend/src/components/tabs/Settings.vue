@@ -153,25 +153,6 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <v-text-field
-                v-model="layout.interval"
-                type="number"
-                :rules="[rules.intervalMin, rules.intervalMax]"
-                label="Auto-Refresh Interval"
-                @input="updateInterval()"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <v-switch
-                v-model="layout.auto"
-                label="Auto Refresh"
-              ></v-switch>
-            </v-col>
-          </v-row>
         </v-form>
       </v-tab-item>
     </v-tabs-items>
