@@ -49,6 +49,7 @@ func Initialize(l *zap.Logger) error {
 			Layout:   "",
 			Layouts:  map[string]string{},
 			Mode:     "DateEarned",
+			Orders:   map[string][]string{},
 		}
 		return nil
 	}
