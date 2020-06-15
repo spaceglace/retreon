@@ -38,6 +38,13 @@
         ></v-slider>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <div>Card bounds</div>
+        <div>Top left X, Y: {{ bound.x }}, {{ bound.y }}</div>
+        <div>Width, Height: {{ bound.width }}, {{ bound.height }}</div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -52,6 +59,7 @@ export default {
 
   computed: {
     ...mapState('profile', ['profile']),
+    ...mapState('layout', ['layout']),
     ...mapState('game', ['handle', 'timer', 'refresh']),
 
     updateDuration() {
@@ -64,6 +72,13 @@ export default {
       const hourChunk = hours > 0 ? `${hours}h ` : '';
       const minuteChunk = minutes > 0 || hours > 0 ? `${minutes}m ` : '';
       return `${hourChunk}${minuteChunk}${seconds}s`;
+    },
+
+    bound() {
+      if (!this.layout) return {};
+      // force bound to recalculate when width/height are changed
+      const { width, height } = this.layout;
+      return document.getElementById('retreon-sheet').getBoundingClientRect();
     },
 
     refreshRate: {

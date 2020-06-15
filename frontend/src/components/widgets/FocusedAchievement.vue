@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="game">
+  <v-container pb-0 v-if="game">
     <div class="overline mb-1">
       Current Goal - {{ focused.Points }} ({{ focused.TrueRatio }}) points
     </div>

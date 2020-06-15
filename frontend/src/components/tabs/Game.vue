@@ -4,10 +4,8 @@
       <v-col
         v-if="game"
         cols="auto"
-        class="title font-weight-light"
-      >
-        Settings for {{ game.title }}
-      </v-col>
+        class="title font-weight-light text-center"
+      >{{ game.title }}</v-col>
       <v-col v-else>
         No game loaded :(
       </v-col>

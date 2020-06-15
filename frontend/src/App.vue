@@ -41,6 +41,7 @@
               :min-height="layout.height"
               :color="layout.background"
               tile
+              id="retreon-sheet"
             >
               <template v-for="(widget, i) in layout.widgets">
                 <component

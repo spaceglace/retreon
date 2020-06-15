@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container pb-0>
     <div class="overline mb-1">
       Next {{ locked.length }} Locked Achievement{{ locked.length === 1 ? '' : 's' }}
     </div>

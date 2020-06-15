@@ -64,7 +64,6 @@ export default {
       }
 
       this.current = this.game.achievements[this.queue.shift()];
-      console.log(this.current);
       setTimeout(this.showNext, 5000);
     },
   },
