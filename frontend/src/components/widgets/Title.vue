@@ -35,7 +35,7 @@ export default {
 
     imageSource() {
       if (this.game === null) return '';
-      return `${this.base}${this.game.icon}`;
+      return `${this.base}${this.game[this.settings.icon]}`;
     },
 
     prefix() {

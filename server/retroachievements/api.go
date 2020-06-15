@@ -19,8 +19,10 @@ type Game struct {
 	ID           string                 `json:"id"`
 	Title        string                 `json:"title"`
 	Icon         string                 `json:"icon"`
+	TitleScreen  string                 `json:"titlescreen"`
+	InGame       string                 `json:"ingame"`
+	BoxArt       string                 `json:"boxart"`
 	Console      string                 `json:"console"`
-	BoxArt       string                 `json:"boxArt"`
 	Softcore     string                 `json:"softcore"`
 	Hardcore     string                 `json:"hardcore"`
 	Achievements map[string]Achievement `json:"achievements"`
@@ -123,6 +125,8 @@ func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
 		Title        string                 `json:"Title"`
 		Console      string                 `json:"ConsoleName"`
 		Icon         string                 `json:"ImageIcon"`
+		Titlescreen  string                 `json:"ImageTitle"`
+		InGame       string                 `json:"ImageIngame"`
 		BoxArt       string                 `json:"ImageBoxArt"`
 		Softcore     string                 `json:"NumDistinctPlayersCasual"`
 		Hardcore     string                 `json:"NumDistinctPlayersHardcore"`
@@ -140,6 +144,8 @@ func GetGameInformation(l *zap.Logger, username, apikey string) (Game, error) {
 		Title:        container.Title,
 		Console:      container.Console,
 		Icon:         container.Icon,
+		TitleScreen:  container.Titlescreen,
+		InGame:       container.InGame,
 		BoxArt:       container.BoxArt,
 		Softcore:     container.Softcore,
 		Hardcore:     container.Hardcore,

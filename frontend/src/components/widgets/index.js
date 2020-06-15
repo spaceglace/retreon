@@ -25,6 +25,18 @@ export default {
         max: 800,
       },
       {
+        name: 'icon',
+        title: 'Image',
+        type: 'selection',
+        default: 'icon',
+        options: [
+          { text: 'Icon', value: 'icon' },
+          { text: 'Title', value: 'titlescreen' },
+          { text: 'In-game', value: 'ingame' },
+          { text: 'Box Art', value: 'boxart' },
+        ],
+      },
+      {
         name: 'beautify',
         title: 'Format Title',
         type: 'boolean',
