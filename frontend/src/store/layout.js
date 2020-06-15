@@ -32,6 +32,9 @@ export default {
       state.layouts[name] = JSON.parse(JSON.stringify(state.layout));
       state.saved = JSON.parse(JSON.stringify(state.layouts[name]));
     },
+    SET_BACKGROUND_COLOR(state, color) {
+      state.layout.backgroundColor = color;
+    },
 
     ADD_WIDGET(state, widget) {
       state.layout.widgets.push(widget);
@@ -134,6 +137,9 @@ export default {
       } catch (e) {
         console.error('Failed to save active layout:', e);
       }
+    },
+    async setBackgroundColor({ commit }, { color }) {
+      commit('SET_BACKGROUND_COLOR', color);
     },
 
     // widgets

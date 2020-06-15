@@ -6,7 +6,7 @@ func GetLayouts() map[string]string {
 	if len(settings.Layouts) == 0 {
 		AddLayout(
 			"default",
-			`{"name":"default","width":300,"height":600,"auto":false,"interval":30,"widgets":[]}`,
+			`{"name":"default","width":300,"height":600,"background":"#1E1E1E","auto":false,"interval":30,"widgets":[]}`,
 		)
 	}
 	return settings.Layouts

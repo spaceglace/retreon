@@ -63,6 +63,7 @@ export default {
         name: this.name,
         width: this.layout.width,
         height: this.layout.height,
+        background: this.layout.background,
         auto: this.layout.auto,
         interval: this.layout.interval,
         widgets: this.layout.widgets,

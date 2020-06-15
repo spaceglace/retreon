@@ -39,6 +39,8 @@
               style="position: fixed"
               :width="layout.width"
               :min-height="layout.height"
+              :color="layout.background"
+              tile
             >
               <template v-for="(widget, i) in layout.widgets">
                 <component
@@ -126,8 +128,6 @@
       await this.getProfiles();
       await this.getActiveLayout();
       await this.getActiveProfile();
-      // TODO: get game info should be somewhere, but not created
-      //await this.getGameInfo(this.profile);
     },
   }
 </script>

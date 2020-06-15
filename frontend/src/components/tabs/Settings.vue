@@ -154,6 +154,23 @@
               ></v-text-field>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col>
+              <v-menu
+                :close-on-content-click="false"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    :color="layout.background"
+                    v-on="on"
+                  >Set Background Colour</v-btn>
+                </template>
+                <v-color-picker
+                  v-model="layout.background"
+                ></v-color-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
         </v-form>
       </v-tab-item>
     </v-tabs-items>
@@ -210,8 +227,7 @@ export default {
         return this.layout.name;
       },
       set(val) {
-        console.log(val, this.hasLayoutChanged);
-
+        // FIXME
         if (this.hasLayoutChanged) {
           this.openDialog({ name: 'change-layout' });
         } else {
@@ -236,6 +252,7 @@ export default {
     ...mapActions('dialogs', ['openDialog']),
     ...mapActions('layout', [
       'setActiveLayout', 'saveLayout', 'removeLayout',
+      'setBackgroundColor',
       'addWidget', 'moveWidget', 'setActiveWidget',
       'setWidgetVisibility',
     ]),
