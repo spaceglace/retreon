@@ -65,6 +65,7 @@ export default {
         height: this.layout.height,
         auto: this.layout.auto,
         interval: this.layout.interval,
+        widgets: this.layout.widgets,
       });
       await this.setActiveLayout({ name: this.name });
       this.loading = false;

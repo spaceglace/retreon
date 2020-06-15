@@ -17,8 +17,8 @@ export default {
       );
       //state.layouts = layouts;
     },
-    ADD_LAYOUT(state, { name, width, height, auto, interval }) {
-      state.layouts[name] = { name, width, height, auto, interval, widgets: [] };
+    ADD_LAYOUT(state, layout) {
+      state.layouts[layout.name] = layout;
     },
     REMOVE_LAYOUT(state, name) {
       delete state.layouts[name];
@@ -61,21 +61,14 @@ export default {
         console.error('Failed to get layouts:', e);
       }
     },
-    async addLayout({ commit }, { name, width, height, auto, interval }) {
-      commit('ADD_LAYOUT', { name, width, height, auto, interval });
+    async addLayout({ commit }, layout) {
+      commit('ADD_LAYOUT', layout);
       try {
-        const payload = JSON.stringify({
-          name,
-          width,
-          height,
-          auto,
-          interval,
-          widgets: [],
-        });
+        const payload = JSON.stringify(layout);
         const request = await fetch(getURL('/api/layout/add'), {
           method: 'POST',
           body: JSON.stringify({
-            name,
+            name: layout.name,
             layout: payload,
           }),
         });
@@ -84,7 +77,7 @@ export default {
         console.error('Failed to add layout:', e);
       }
     },
-    async removeLayout({ commit }, { name }) {
+    async removeLayout({ commit }, name) {
       commit('REMOVE_LAYOUT', name);
       try {
         const request = await fetch(getURL('/api/layout/remove'), {

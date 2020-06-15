@@ -55,12 +55,14 @@ export default {
   methods: {
     ...mapActions('dialogs', ['closeDialog']),
     ...mapActions('profile', ['addProfile']),
-    submit() {
-      this.addProfile({
+    async submit() {
+      await this.addProfile({
         name: this.username,
         key: this.key,
       });
-      // TODO: show success/failure, close dialog?
+      this.loading = false;
+      this.closeDialog();
+      // TODO: show some form of banner for success/failure
     },
     cancel() {
       this.closeDialog();

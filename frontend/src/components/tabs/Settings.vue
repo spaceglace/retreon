@@ -31,6 +31,7 @@
           color="error darken-2"
           small
           :disabled="activeLayout === 'default'"
+          @click="removeLayout(activeLayout)"
         >Delete</v-btn>
       </v-col>
     </v-row>
@@ -234,7 +235,7 @@ export default {
   methods: {
     ...mapActions('dialogs', ['openDialog']),
     ...mapActions('layout', [
-      'setActiveLayout', 'saveLayout',
+      'setActiveLayout', 'saveLayout', 'removeLayout',
       'addWidget', 'moveWidget', 'setActiveWidget',
       'setWidgetVisibility',
     ]),
