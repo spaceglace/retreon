@@ -163,4 +163,66 @@ export default {
       },
     ],
   },
+  'widget-circle': {
+    name: 'widget-circle',
+    title: 'Circle',
+    settings: [
+      {
+        name: 'height',
+        title: 'Height',
+        type: 'slider',
+        default: 200,
+        min: 100,
+        max: 800,
+      },
+    ],
+  },
+  'widget-spacer': {
+    name: 'widget-spacer',
+    title: 'Spacer',
+    settings: [
+      {
+        name: 'line',
+        title: 'Show Divider',
+        type: 'boolean',
+        default: true,
+      },
+      {
+        name: 'top',
+        title: 'Space Above',
+        type: 'slider',
+        default: 20,
+        min: 0,
+        max: 100,
+      },
+      {
+        name: 'bottom',
+        title: 'Space Below',
+        type: 'slider',
+        default: 20,
+        min: 0,
+        max: 100,
+      },
+    ],
+  },
+  'widget-image': {
+    name: 'widget-image',
+    title: 'Image',
+    settings: [
+      {
+        name: 'url',
+        title: 'URL',
+        type: 'string',
+        default: '',
+      },
+      {
+        name: 'height',
+        title: 'Height',
+        type: 'slider',
+        default: 100,
+        min: 20,
+        max: 500,
+      },
+    ],
+  },
 };

@@ -77,6 +77,9 @@
   import WidgetFocused from '@/components/widgets/FocusedAchievement.vue';
   import WidgetAchievementOverlay from '@/components/widgets/AchievementOverlay.vue';
   import WidgetOverlay from '@/components/widgets/Overlay.vue';
+  import WidgetCircle from '@/components/widgets/Circle.vue';
+  import WidgetSpacer from '@/components/widgets/Divider.vue';
+  import WidgetImage from '@/components/widgets/Image.vue';
   // Dialog components
   import AddProfile from '@/components/dialogs/AddProfile.vue';
   import DeleteProfile from '@/components/dialogs/DeleteProfile.vue';
@@ -104,6 +107,9 @@
       WidgetAchievementOverlay,
       WidgetOverlay,
       WidgetFocused,
+      WidgetCircle,
+      WidgetSpacer,
+      WidgetImage,
       // dialogs
       AddProfile,
       DeleteProfile,
